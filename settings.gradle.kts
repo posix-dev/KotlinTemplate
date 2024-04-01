@@ -19,6 +19,10 @@ dependencyResolutionManagement {
 }
 
 include(":composeApp")
+include(":common:core")
 include(":common:login:api")
 include(":common:login:data")
 include(":common:login:presentation")
+include(":common:login:compose")
+include(":common:bridge-compose")
+include(":common:bridge-core")

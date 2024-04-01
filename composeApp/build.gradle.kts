@@ -1,6 +1,4 @@
 import org.jetbrains.compose.desktop.application.dsl.TargetFormat
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
-import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 
 plugins {
     id(libs.plugins.androidApplication.get().pluginId)
@@ -9,27 +7,10 @@ plugins {
 }
 
 kotlin {
-    @OptIn(ExperimentalWasmDsl::class)
-    wasmJs {
-        moduleName = "composeApp"
-        browser {
-            commonWebpackConfig {
-                outputFileName = "composeApp.js"
-                devServer = (devServer ?: KotlinWebpackConfig.DevServer()).apply {
-                    static = (static ?: mutableListOf()).apply {
-                        // Serve sources to debug inside browser
-                        add(project.projectDir.path)
-                    }
-                }
-            }
-        }
-        binaries.executable()
-    }
-    
     androidTarget {
         compilations.all {
             kotlinOptions {
-                jvmTarget = "11"
+                jvmTarget = "17"
             }
         }
     }
@@ -52,9 +33,18 @@ kotlin {
         
         androidMain.dependencies {
             implementation(libs.compose.ui.tooling.preview)
+            implementation(libs.androidx.appcompat)
             implementation(libs.androidx.activity.compose)
         }
         commonMain.dependencies {
+            implementation(project(":common:core"))
+            implementation(project(":common:login:api"))
+            implementation(project(":common:bridge-compose"))
+            implementation(project(":common:bridge-core"))
+
+            //            implementation(libs.odyssey.compose)
+            //            implementation(libs.odyssey.core)
+
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)
@@ -94,8 +84,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     dependencies {
         debugImplementation(libs.compose.ui.tooling)

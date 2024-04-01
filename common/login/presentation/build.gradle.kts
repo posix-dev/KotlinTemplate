@@ -7,7 +7,7 @@ kotlin {
         commonMain {
             dependencies {
                 api(project(":common:login:api"))
-               // api(project(":common:core"))
+                api(project(":common:core"))
 
                 implementation(libs.kviewmodel.core)
             }

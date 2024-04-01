@@ -7,15 +7,16 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
+                implementation(project(":common:core"))
                 implementation(project(":common:login:api"))
 
-               // implementation(libs.kodein.di)
-                //implementation(libs.multiplatform.settings.core)
+                implementation(libs.kodein.di)
+                implementation(libs.multiplatform.settings.core)
             }
         }
     }
 }
 
 android {
-    namespace ="uptop.dev.ru.login.presentation"
+    namespace ="uptop.dev.ru.login.data"
 }
